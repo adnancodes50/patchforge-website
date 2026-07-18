@@ -1,0 +1,546 @@
+import { useEffect, useMemo, useState } from 'react';
+import {
+  ArrowRight,
+  ArrowUp,
+  Check,
+  ChevronRight,
+  Gem,
+  Hexagon,
+  Menu,
+  MessageCircle,
+  Minus,
+  Plus,
+  Send,
+  X,
+} from 'lucide-react';
+import {
+  categories,
+  brandName,
+  contact,
+  faqs,
+  footerLinks,
+  gallery,
+  iconSet,
+  navItems,
+  process,
+  reasons,
+  stats,
+  testimonials,
+} from './data';
+
+function Brand() {
+  return (
+    <a href="#top" className="brand" aria-label={`${brandName} home`}>
+      <span className="brand-mark">
+        <Hexagon size={22} />
+        <Gem size={10} className="brand-gem" />
+      </span>
+      <span>{brandName}</span>
+    </a>
+  );
+}
+
+function SectionIntro({ eyebrow, title, text, align = 'center' }) {
+  return (
+    <div className={`section-intro ${align === 'left' ? 'section-intro-left' : ''}`}>
+      <span className="eyebrow">{eyebrow}</span>
+      <h2>{title}</h2>
+      <p>{text}</p>
+    </div>
+  );
+}
+
+function AnnouncementBar() {
+  return (
+    <div className="announcement">
+      <span>Premium sportswear patches, labels, and emblems with free artwork review</span>
+      <a href="#quote">Get pricing <ChevronRight size={15} /></a>
+    </div>
+  );
+}
+
+function Navbar() {
+  const [open, setOpen] = useState(false);
+
+  return (
+    <header className="site-header">
+      <nav className="nav-wrap" aria-label="Primary navigation">
+        <Brand />
+        <div className={`nav-links ${open ? 'is-open' : ''}`}>
+          {navItems.map(([label, href]) => (
+            <a key={label} href={href} onClick={() => setOpen(false)}>
+              {label}
+            </a>
+          ))}
+        </div>
+        <a className="btn btn-primary nav-cta" href="#quote">
+          Get Quote <ArrowRight size={17} />
+        </a>
+        <button className="icon-btn menu-btn" type="button" aria-label="Toggle menu" onClick={() => setOpen((value) => !value)}>
+          {open ? <X size={22} /> : <Menu size={22} />}
+        </button>
+      </nav>
+    </header>
+  );
+}
+
+function Hero() {
+  const { BadgeCheck, Gem, Star } = iconSet;
+
+  return (
+    <section className="hero section" id="top">
+      <div className="container hero-grid">
+        <div className="hero-copy reveal">
+          <span className="hero-badge">
+            <BadgeCheck size={16} /> Custom sportswear patch manufacturer
+          </span>
+          <h1>
+            Premium custom patches made for teams, brands, and sportswear.
+          </h1>
+          <p>
+            TMY Sports wear creates embroidered patches, PVC badges, woven labels, leather trims,
+            and iron-on emblems with sharp artwork proofing, reliable stitching, and export-ready finishing.
+          </p>
+          <div className="hero-actions">
+            <a className="btn btn-primary" href="#quote">
+              Get a Free Quote <ArrowRight size={18} />
+            </a>
+            <a className="btn btn-outline" href="#gallery">
+              View Gallery
+            </a>
+          </div>
+          <div className="trust-row" aria-label="Service highlights">
+            <span><Gem size={17} /> Premium materials</span>
+            <span><Star size={17} /> 24-hour artwork response</span>
+          </div>
+        </div>
+        <div className="hero-visual reveal delay-1">
+          <div className="visual-card">
+            <img
+              src="https://s.alicdn.com/%40sc04/kf/Hd6ef4793f1074ded9fa203fbc04b80f2t.jpg?auto=format&fit=crop&ixlib=rb-4.0.3&q=80&w=1000"
+              alt="Real custom PVC and embroidered patch product samples"
+            />
+          </div>
+          <div className="floating-spec spec-a">Free artwork proof</div>
+          <div className="floating-spec spec-b">Wholesale ready</div>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+function Stats() {
+  return (
+    <>
+      <section className="stats-band" aria-label={`${brandName} statistics`}>
+        <div className="container stats-grid">
+          {stats.map(([value, label]) => (
+            <div className="stat motion-item" key={label}>
+              <strong>{value}</strong>
+              <span>{label}</span>
+            </div>
+          ))}
+        </div>
+      </section>
+      <div className="marquee-band" aria-hidden="true">
+        <div>
+          <span>Embroidered patches</span>
+          <span>PVC badges</span>
+          <span>Leather labels</span>
+          <span>Woven emblems</span>
+          <span>Sportswear trims</span>
+          <span>Custom proofing</span>
+        </div>
+        <div>
+          <span>Embroidered patches</span>
+          <span>PVC badges</span>
+          <span>Leather labels</span>
+          <span>Woven emblems</span>
+          <span>Sportswear trims</span>
+          <span>Custom proofing</span>
+        </div>
+      </div>
+    </>
+  );
+}
+
+function Categories() {
+  const [active, setActive] = useState(0);
+  const selected = categories[active];
+
+  return (
+    <section className="section" id="categories">
+      <div className="container">
+        <SectionIntro
+          eyebrow="Patch categories"
+          title="Every patch style your project needs"
+          text="Choose the material, edge, texture, and backing that matches your product, uniform, merchandise, or campaign."
+        />
+        <div className="category-tabs" role="tablist" aria-label="Patch categories">
+          {categories.map((item, index) => (
+            <button
+              className={active === index ? 'is-active' : ''}
+              type="button"
+              key={item.title}
+              onClick={() => setActive(index)}
+              role="tab"
+              aria-selected={active === index}
+            >
+              {item.title}
+            </button>
+          ))}
+        </div>
+        <div className="category-panel motion-item">
+          <div>
+            <span className="eyebrow">Featured style</span>
+            <h3>{selected.title} Patches</h3>
+            <p>{selected.desc}</p>
+            <ul className="check-list">
+              {selected.points.map((point) => (
+                <li key={point}><Check size={17} /> {point}</li>
+              ))}
+            </ul>
+            <a className="btn btn-dark" href="#quote">Start Custom Order</a>
+          </div>
+          <div className="category-image-grid" key={selected.title}>
+            {selected.images.map((image, index) => (
+              <img
+                className={index === 0 ? 'tab-image-main' : 'tab-image-thumb'}
+                key={image}
+                src={image}
+                alt={`${selected.title} custom patch sample ${index + 1}`}
+              />
+            ))}
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+function Gallery() {
+  return (
+    <section className="section gallery-section" id="gallery">
+      <div className="container">
+        <div className="split-heading">
+          <SectionIntro
+            align="left"
+            eyebrow="Product gallery"
+            title="Real production-inspired finishes"
+            text="Explore patch styles for apparel brands, public safety teams, outdoor gear, events, clubs, and wholesale merchandise."
+          />
+          <div className="pill-row">
+            <span>All</span>
+            <span>Uniform</span>
+            <span>Retail</span>
+            <span>Tactical</span>
+          </div>
+        </div>
+        <div className="gallery-grid">
+          {gallery.map(([title, image, type]) => (
+            <article className="gallery-card motion-item" key={title}>
+              <img src={image} alt={`${title} custom patch`} />
+              <div>
+                <span>{type}</span>
+                <h3>{title}</h3>
+              </div>
+            </article>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+function WhyChooseUs() {
+  return (
+    <section className="section">
+      <div className="container">
+        <SectionIntro
+          eyebrow="Why choose us"
+          title="A smoother way to order custom patches"
+          text="Professional guidance, proof-first production, premium materials, and quality checks help your order move from idea to delivery with confidence."
+        />
+        <div className="reason-grid">
+          {reasons.map(([Icon, title, text]) => (
+            <article className="feature-card motion-item" key={title}>
+              <Icon size={26} />
+              <h3>{title}</h3>
+              <p>{text}</p>
+            </article>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+function Process() {
+  return (
+    <section className="section process-section" id="process">
+      <div className="container">
+        <SectionIntro
+          eyebrow="Ordering process"
+          title="Simple process, polished results"
+          text="Send the idea, approve the proof, start production, and receive patches that are ready to sell, wear, or distribute."
+        />
+        <div className="process-line">
+          {process.map(([Icon, title, text], index) => (
+            <article className="process-step motion-item" key={title}>
+              <div className="step-icon"><Icon size={22} /></div>
+              <span>{String(index + 1).padStart(2, '0')}</span>
+              <h3>{title}</h3>
+              <p>{text}</p>
+            </article>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+function CtaBanner() {
+  return (
+    <section className="section cta-section">
+      <div className="container cta-banner">
+        <div>
+          <span className="eyebrow">Production slots open</span>
+          <h2>Launch your next patch order with a professional proof first.</h2>
+          <p>Send your artwork and receive clear pricing, material guidance, and a production-ready recommendation.</p>
+        </div>
+        <a className="btn btn-primary" href="#quote">
+          Request Pricing <ArrowRight size={18} />
+        </a>
+      </div>
+    </section>
+  );
+}
+
+function Testimonials() {
+  return (
+    <section className="section">
+      <div className="container">
+        <SectionIntro
+          eyebrow="Testimonials"
+          title="Made for people who care about the final detail"
+          text="TMY Sports wear supports brands, agencies, teams, and organizations that need patches to feel premium from the first sample."
+        />
+        <div className="testimonial-grid">
+          {testimonials.map(([name, role, quote]) => (
+            <article className="quote-card motion-item" key={name}>
+              <div className="stars">★★★★★</div>
+              <p>"{quote}"</p>
+              <strong>{name}</strong>
+              <span>{role}</span>
+            </article>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+function Faq() {
+  const [open, setOpen] = useState(0);
+
+  return (
+    <section className="section faq-section" id="faq">
+      <div className="container narrow">
+        <SectionIntro
+          eyebrow="FAQ"
+          title="Common questions"
+          text="Production details, order quantities, artwork help, and shipping basics."
+        />
+        <div className="faq-list">
+          {faqs.map(([question, answer], index) => (
+            <article className={`faq-item ${open === index ? 'is-open' : ''}`} key={question}>
+              <button type="button" onClick={() => setOpen(open === index ? -1 : index)}>
+                <span>{question}</span>
+                {open === index ? <Minus size={20} /> : <Plus size={20} />}
+              </button>
+              <p>{answer}</p>
+            </article>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+function QuoteForm() {
+  const [submitted, setSubmitted] = useState(false);
+  const typeOptions = useMemo(() => categories.map((item) => item.title), []);
+  const mapsUrl = 'https://www.google.com/maps/search/?api=1&query=Sialkot%2C%20Pakistan';
+
+  return (
+    <section className="section quote-section" id="quote">
+      <div className="container quote-grid">
+        <div className="quote-copy">
+          <SectionIntro
+            align="left"
+            eyebrow="Free quote"
+            title="Start your custom patch project"
+            text="Send your design details and our team will recommend the best patch type, size, backing, and finishing option."
+          />
+          <div className="quote-info-row">
+            <a className="map-card" href={mapsUrl} target="_blank" rel="noreferrer" aria-label="Open Sialkot Pakistan in Google Maps">
+              <iframe
+                title="Sialkot Pakistan map"
+                src="https://maps.google.com/maps?q=Sialkot%2C%20Pakistan&output=embed"
+                loading="lazy"
+                referrerPolicy="no-referrer-when-downgrade"
+              />
+              <span>Open in Google Maps</span>
+            </a>
+            <div className="contact-card">
+              {contact.map(([Icon, label, value]) => (
+                <div className="contact-row" key={label}>
+                  <Icon size={21} />
+                  <div>
+                    <strong>{label}</strong>
+                    <span>{value}</span>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+        <form
+          className="quote-form"
+          onSubmit={(event) => {
+            event.preventDefault();
+            setSubmitted(true);
+          }}
+        >
+          <div className="field-pair">
+            <label>
+              Full name
+              <input name="name" placeholder="Alex Morgan" required />
+            </label>
+            <label>
+              Work email
+              <input name="email" type="email" placeholder="alex@company.com" required />
+            </label>
+          </div>
+          <div className="field-pair">
+            <label>
+              Patch type
+              <select name="patchType">
+                {typeOptions.map((type) => (
+                  <option key={type}>{type}</option>
+                ))}
+                <option>Chenille</option>
+                <option>Sublimated</option>
+              </select>
+            </label>
+            <label>
+              Quantity
+              <input name="quantity" type="number" min="50" placeholder="250" required />
+            </label>
+          </div>
+          <label>
+            Size and backing
+            <input name="details" placeholder="3 x 3 in, Velcro backing" />
+          </label>
+          <label>
+            Artwork notes
+            <textarea name="notes" rows="5" placeholder="Describe colors, usage, deadline, and finish preferences." />
+          </label>
+          <label className="upload-box">
+            <input name="artwork" type="file" />
+            <span>Upload artwork</span>
+            <small>AI, EPS, SVG, PDF, PNG, JPG</small>
+          </label>
+          <button className="btn btn-primary form-submit" type="submit">
+            Send Quote Request <Send size={17} />
+          </button>
+          {submitted && <p className="form-note">Quote request captured for this demo.</p>}
+        </form>
+      </div>
+    </section>
+  );
+}
+
+function Footer() {
+  return (
+    <footer className="footer">
+      <div className="container footer-grid">
+        <div>
+          <Brand />
+          <p>Premium sportswear patch manufacturing with precise proofs, strong materials, and dependable production timelines.</p>
+        </div>
+        {Object.entries(footerLinks).map(([heading, links]) => (
+          <div key={heading}>
+            <h3>{heading}</h3>
+            {links.map((link) => (
+              <a key={link} href="#quote">{link}</a>
+            ))}
+          </div>
+        ))}
+      </div>
+      <div className="container footer-bottom">
+        <span>Copyright 2026 TMY Sports wear. All rights reserved.</span>
+        <span>Custom patches, labels, emblems, and trims.</span>
+      </div>
+    </footer>
+  );
+}
+
+function FloatingActions() {
+  return (
+    <div className="floating-actions" aria-label="Quick actions">
+      <a className="whatsapp" href="https://wa.me/923273168157" target="_blank" rel="noreferrer" aria-label="Contact TMY Sports wear on WhatsApp">
+        <MessageCircle size={24} />
+      </a>
+      <button
+        className="top-button"
+        type="button"
+        aria-label="Back to top"
+        onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
+      >
+        <ArrowUp size={22} />
+      </button>
+    </div>
+  );
+}
+
+export default function App() {
+  useEffect(() => {
+    const animated = document.querySelectorAll('.motion-item, .section-intro, .quote-form, .map-card, .contact-card');
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('in-view');
+            observer.unobserve(entry.target);
+          }
+        });
+      },
+      { threshold: 0.16 },
+    );
+
+    animated.forEach((item) => observer.observe(item));
+    return () => observer.disconnect();
+  }, []);
+
+  return (
+    <>
+      <AnnouncementBar />
+      <Navbar />
+      <main>
+        <Hero />
+        <Stats />
+        <Categories />
+        <Gallery />
+        <WhyChooseUs />
+        <Process />
+        <CtaBanner />
+        <Testimonials />
+        <Faq />
+        <QuoteForm />
+      </main>
+      <Footer />
+      <FloatingActions />
+    </>
+  );
+}
