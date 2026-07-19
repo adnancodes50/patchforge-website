@@ -517,7 +517,7 @@ function Footer() {
 function FloatingActions() {
   return (
     <div className="floating-actions" aria-label="Quick actions">
-      <a className="whatsapp" href="https://wa.me/923273168157" target="_blank" rel="noreferrer" aria-label="Contact TMY Sports wear on WhatsApp">
+      <a className="whatsapp" href="https://wa.me/923406473164" target="_blank" rel="noreferrer" aria-label="Contact TMY Sports wear on WhatsApp">
         <MessageCircle size={24} />
       </a>
       <button

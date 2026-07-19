@@ -150,7 +150,7 @@ export const faqs = [
 
 export const contact = [
   [MapPin, 'Address', 'Sialkot, Pakistan'],
-  [Phone, 'Phone / WhatsApp', '+92 327 3168157'],
+  [Phone, 'Phone / WhatsApp', '+92 340 6473164'],
   [Mail, 'Email', 'miantaaha43@gmail.com'],
   [Globe2, 'Worldwide Orders', 'USA, UK, UAE, EU, and global delivery'],
 ];
