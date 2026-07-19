@@ -116,38 +116,24 @@ img {
 .brand {
   display: inline-flex;
   align-items: center;
-  gap: 11px;
+  gap: 12px;
   color: var(--text);
   font-size: 18px;
   font-weight: 800;
   letter-spacing: 0.02em;
 }
 
-.brand-mark {
-  width: 42px;
-  height: 42px;
-  position: relative;
-  display: grid;
-  place-items: center;
-  border: 1px solid rgba(183, 255, 60, 0.5);
-  border-radius: 14px;
-  background:
-    radial-gradient(circle at 70% 20%, rgba(255, 255, 255, 0.22), transparent 25%),
-    linear-gradient(145deg, rgba(183, 255, 60, 0.28), rgba(128, 233, 213, 0.1)),
-    #0b110c;
-  box-shadow: 0 0 0 4px rgba(183, 255, 60, 0.08), var(--glow);
-  color: var(--lime);
+.brand-logo {
+  width: 48px;
+  height: 48px;
+  object-fit: cover;
+  border-radius: 50%;
+  flex-shrink: 0;
+  box-shadow: 0 0 0 2px rgba(220, 38, 38, 0.35), 0 4px 14px rgba(0, 0, 0, 0.35);
 }
 
-.brand-mark svg:first-child {
-  stroke-width: 2.4;
-}
-
-.brand-gem {
-  position: absolute;
-  color: #050706;
-  fill: var(--lime);
-  stroke: var(--lime);
+.brand-name {
+  white-space: nowrap;
 }
 
 .nav-links {

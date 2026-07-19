@@ -4,8 +4,6 @@ import {
   ArrowUp,
   Check,
   ChevronRight,
-  Gem,
-  Hexagon,
   Menu,
   MessageCircle,
   Minus,
@@ -31,11 +29,14 @@ import {
 function Brand() {
   return (
     <a href="#top" className="brand" aria-label={`${brandName} home`}>
-      <span className="brand-mark">
-        <Hexagon size={22} />
-        <Gem size={10} className="brand-gem" />
-      </span>
-      <span>{brandName}</span>
+      <img
+        className="brand-logo"
+        src="/tmy-logo.png"
+        alt={brandName}
+        width={48}
+        height={48}
+      />
+      <span className="brand-name">{brandName}</span>
     </a>
   );
 }
