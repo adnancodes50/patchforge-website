@@ -115,12 +115,9 @@ export const gallery = [
   ['Plain Black Hoodie', '/gallery/hoodie-black-plain.png', 'Hoodies'],
   ['Maroon Pullover Hoodie', '/gallery/hoodie-maroon.png', 'Hoodies'],
   ['Hurricane Graphic Tee', '/gallery/tee-hurricane-yellow.png', 'T-Shirts'],
-  ['Navy & White Tee Pair', '/gallery/tee-navy-white-pair.png', 'T-Shirts'],
   ['Navy Crew Tee', '/gallery/tee-navy-plain.png', 'T-Shirts'],
   ['Porsche 911 Tee', '/gallery/tee-porsche-maroon.png', 'T-Shirts'],
   ['Rider Motorbike Tee', '/gallery/tee-rider-red.png', 'T-Shirts'],
-  ['Cyan Blank Tee', '/gallery/tee-cyan-plain.png', 'T-Shirts'],
-  ['Blue Stone Navy Tee', '/gallery/tee-bluestone-navy.png', 'T-Shirts'],
 ];
 
 export const reasons = [

@@ -937,50 +937,83 @@ p {
     var(--bg);
 }
 
-.quote-grid {
+.quote-top-row {
   display: grid;
-  grid-template-columns: 0.86fr 1.14fr;
-  gap: 34px;
-  align-items: start;
-}
-
-.quote-form {
-  min-height: 640px;
+  grid-template-columns: 1fr 1fr;
+  gap: 28px;
+  align-items: stretch;
+  margin-bottom: 22px;
 }
 
 .quote-copy {
   display: flex;
   flex-direction: column;
+  justify-content: center;
+  min-width: 0;
+  padding-right: 8px;
 }
 
-.quote-copy .section-intro {
-  margin-bottom: 24px;
+.quote-copy .eyebrow {
+  margin-bottom: 14px;
 }
 
-.quote-copy .section-intro h2 {
-  max-width: 520px;
-  font-size: clamp(30px, 3vw, 44px);
+.quote-copy h2 {
+  max-width: none;
+  margin-bottom: 16px;
+  font-size: clamp(30px, 3.2vw, 44px);
   line-height: 1.12;
 }
 
-.quote-copy .section-intro p {
-  max-width: 520px;
-  font-size: 16px;
+.quote-copy p {
+  max-width: none;
+  margin-bottom: 14px;
+  color: var(--muted);
+  font-size: 15.5px;
+  line-height: 1.7;
 }
 
-.quote-info-row {
+.quote-points {
   display: grid;
-  grid-template-columns: 1fr;
-  grid-template-rows: 260px auto;
+  gap: 10px;
+  margin: 10px 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.quote-points li {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: var(--soft);
+  font-size: 14.5px;
+  font-weight: 600;
+}
+
+.quote-points svg {
+  color: var(--lime);
+  flex-shrink: 0;
+}
+
+.quote-bottom-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
   gap: 18px;
   align-items: stretch;
+}
+
+.quote-form {
+  min-height: 0;
+  height: 100%;
+  display: grid;
+  gap: 12px;
+  align-content: start;
 }
 
 .map-card {
   position: relative;
   display: block;
   height: 100%;
-  min-height: 0;
+  min-height: 340px;
   border: 1px solid var(--line);
   border-radius: var(--radius);
   overflow: hidden;
@@ -992,7 +1025,7 @@ p {
   width: 100%;
   height: 100%;
   border: 0;
-  filter: grayscale(0.25) contrast(1.05) brightness(0.86);
+  filter: grayscale(0.2) contrast(1.05) brightness(0.88);
   pointer-events: none;
 }
 
@@ -1014,14 +1047,14 @@ p {
 
 .contact-card,
 .quote-form {
-  padding: 26px;
+  padding: 22px;
 }
 
 .contact-card {
   display: grid;
   gap: 14px;
-  min-height: 300px;
-  align-content: start;
+  min-height: 340px;
+  align-content: center;
   overflow: visible;
 }
 
@@ -1391,19 +1424,23 @@ textarea {
 
   .hero-grid,
   .category-panel,
-  .quote-grid {
+  .quote-top-row,
+  .quote-bottom-row {
     grid-template-columns: 1fr;
   }
 
-  .quote-copy,
+  .quote-form {
+    grid-column: auto;
+  }
+
   .quote-form {
     height: auto;
     min-height: 0;
   }
 
-  .quote-info-row {
-    grid-template-columns: 1fr 1fr;
-    grid-template-rows: 340px;
+  .map-card,
+  .contact-card {
+    min-height: 300px;
   }
 
   .hero-visual,
@@ -1493,16 +1530,16 @@ textarea {
   .reason-grid,
   .testimonial-grid,
   .process-line,
-  .field-pair,
-  .quote-info-row,
+  .quote-top-row,
+  .quote-bottom-row,
   .footer-grid {
     grid-template-columns: 1fr;
   }
 
   .map-card,
   .contact-card {
-    height: 300px;
-    min-height: 300px;
+    height: auto;
+    min-height: 260px;
   }
 
   .category-panel,

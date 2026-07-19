@@ -408,96 +408,82 @@ function Faq() {
 
 function QuoteForm() {
   const [submitted, setSubmitted] = useState(false);
-  const typeOptions = useMemo(
-    () => categories.filter((item) => item.title !== 'Hoodies').map((item) => item.title),
-    [],
-  );
   const mapsUrl = 'https://www.google.com/maps/search/?api=1&query=Sialkot%2C%20Pakistan';
 
   return (
     <section className="section quote-section" id="quote">
-      <div className="container quote-grid">
-        <div className="quote-copy">
-          <SectionIntro
-            align="left"
-            eyebrow="Free quote"
-            title="Start your custom patch project"
-            text="Send your design details and our team will recommend the best patch type, size, backing, and finishing option."
-          />
-          <div className="quote-info-row">
-            <a className="map-card" href={mapsUrl} target="_blank" rel="noreferrer" aria-label="Open Sialkot Pakistan in Google Maps">
-              <iframe
-                title="Sialkot Pakistan map"
-                src="https://maps.google.com/maps?q=Sialkot%2C%20Pakistan&output=embed"
-                loading="lazy"
-                referrerPolicy="no-referrer-when-downgrade"
-              />
-              <span>Open in Google Maps</span>
-            </a>
-            <div className="contact-card">
-              {contact.map(([Icon, label, value]) => (
-                <div className="contact-row" key={label}>
-                  <Icon size={21} />
-                  <div>
-                    <strong>{label}</strong>
-                    <span>{value}</span>
-                  </div>
-                </div>
-              ))}
-            </div>
+      <div className="container">
+        <div className="quote-top-row">
+          <div className="quote-copy">
+            <span className="eyebrow">Contact</span>
+            <h2>Start your custom order with a clear brief</h2>
+            <p>
+              Whether you need custom hoodies, embroidered patches, PVC badges, or woven labels,
+              our team reviews every request carefully and replies with practical recommendations.
+            </p>
+            <p>
+              Include your quantity, preferred size, material, and deadline if you have one.
+              We typically respond within 24 business hours with pricing guidance and next steps.
+            </p>
+            <ul className="quote-points">
+              <li><Check size={17} /> Free artwork review before production</li>
+              <li><Check size={17} /> Flexible quantities for samples and wholesale</li>
+              <li><Check size={17} /> Worldwide shipping with tracking support</li>
+              <li><Check size={17} /> Dedicated WhatsApp and email support</li>
+            </ul>
           </div>
+          <form
+            className="quote-form"
+            onSubmit={(event) => {
+              event.preventDefault();
+              setSubmitted(true);
+            }}
+          >
+            <label>
+              Name
+              <input name="name" placeholder="Your full name" required />
+            </label>
+            <label>
+              Email
+              <input name="email" type="email" placeholder="you@email.com" required />
+            </label>
+            <label>
+              Phone
+              <input name="phone" type="tel" placeholder="+92 300 0000000" required />
+            </label>
+            <label>
+              Message
+              <textarea name="message" rows="5" placeholder="Tell us about your product type, quantity, size, and deadline..." required />
+            </label>
+            <button className="btn btn-primary form-submit" type="submit">
+              Send Message <Send size={17} />
+            </button>
+            {submitted && <p className="form-note">Message captured for this demo.</p>}
+          </form>
         </div>
-        <form
-          className="quote-form"
-          onSubmit={(event) => {
-            event.preventDefault();
-            setSubmitted(true);
-          }}
-        >
-          <div className="field-pair">
-            <label>
-              Full name
-              <input name="name" placeholder="Alex Morgan" required />
-            </label>
-            <label>
-              Work email
-              <input name="email" type="email" placeholder="alex@company.com" required />
-            </label>
+
+        <div className="quote-bottom-row">
+          <div className="contact-card">
+            {contact.map(([Icon, label, value]) => (
+              <div className="contact-row" key={label}>
+                <Icon size={21} />
+                <div>
+                  <strong>{label}</strong>
+                  <span>{value}</span>
+                </div>
+              </div>
+            ))}
           </div>
-          <div className="field-pair">
-            <label>
-              Patch type
-              <select name="patchType">
-                {typeOptions.map((type) => (
-                  <option key={type}>{type}</option>
-                ))}
-                <option>Chenille</option>
-                <option>Sublimated</option>
-              </select>
-            </label>
-            <label>
-              Quantity
-              <input name="quantity" type="number" min="50" placeholder="250" required />
-            </label>
-          </div>
-          <label>
-            Size and backing
-            <input name="details" placeholder="3 x 3 in, Velcro backing" />
-          </label>
-          <label>
-            Artwork notes
-            <textarea name="notes" rows="5" placeholder="Describe colors, usage, deadline, and finish preferences." />
-          </label>
-          <label className="upload-box">
-            <input name="artwork" type="file" />
-            <span>Upload artwork</span>
-            <small>AI, EPS, SVG, PDF, PNG, JPG</small>
-          </label>
-          <button className="btn btn-primary form-submit" type="submit">
-            Send Quote Request <Send size={17} />
-          </button>
-          {submitted && <p className="form-note">Quote request captured for this demo.</p>}
-        </form>
+          <a className="map-card" href={mapsUrl} target="_blank" rel="noreferrer" aria-label="Open Sialkot Pakistan in Google Maps">
+            <iframe
+              title="Sialkot Pakistan map"
+              src="https://maps.google.com/maps?q=Sialkot%2C%20Pakistan&output=embed"
+              loading="lazy"
+              referrerPolicy="no-referrer-when-downgrade"
+            />
+            <span>Open in Google Maps</span>
+          </a>
+        </div>
       </div>
     </section>
   );
