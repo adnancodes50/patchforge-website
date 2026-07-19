@@ -18,6 +18,7 @@ import {
   faqs,
   footerLinks,
   gallery,
+  galleryFilters,
   iconSet,
   navItems,
   process,
@@ -93,14 +94,14 @@ function Hero() {
       <div className="container hero-grid">
         <div className="hero-copy reveal">
           <span className="hero-badge">
-            <BadgeCheck size={16} /> Custom sportswear patch manufacturer
+            <BadgeCheck size={16} /> Custom hoodies &amp; patch manufacturer
           </span>
           <h1>
-            Premium custom patches made for teams, brands, and sportswear.
+            Premium custom apparel made for teams, brands, and sportswear.
           </h1>
           <p>
-            TMY Sports wear creates embroidered patches, PVC badges, woven labels, leather trims,
-            and iron-on emblems with sharp artwork proofing, reliable stitching, and export-ready finishing.
+            TMY Sports wear creates custom hoodies, embroidered patches, PVC badges, woven labels,
+            and iron-on emblems with sharp artwork proofing and export-ready finishing.
           </p>
           <div className="hero-actions">
             <a className="btn btn-primary" href="#quote">
@@ -118,12 +119,12 @@ function Hero() {
         <div className="hero-visual reveal delay-1">
           <div className="visual-card">
             <img
-              src="https://s.alicdn.com/%40sc04/kf/Hd6ef4793f1074ded9fa203fbc04b80f2t.jpg?auto=format&fit=crop&ixlib=rb-4.0.3&q=80&w=1000"
-              alt="Real custom PVC and embroidered patch product samples"
+              src="/gallery/hoodie-burgundy.png"
+              alt="Custom TMY Sports wear hoodie sample"
             />
           </div>
           <div className="floating-spec spec-a">Free artwork proof</div>
-          <div className="floating-spec spec-b">Wholesale ready</div>
+          <div className="floating-spec spec-b">Custom hoodies</div>
         </div>
       </div>
     </section>
@@ -149,6 +150,7 @@ function Stats() {
           <span>PVC badges</span>
           <span>Leather labels</span>
           <span>Woven emblems</span>
+          <span>Custom hoodies</span>
           <span>Sportswear trims</span>
           <span>Custom proofing</span>
         </div>
@@ -157,6 +159,7 @@ function Stats() {
           <span>PVC badges</span>
           <span>Leather labels</span>
           <span>Woven emblems</span>
+          <span>Custom hoodies</span>
           <span>Sportswear trims</span>
           <span>Custom proofing</span>
         </div>
@@ -168,16 +171,17 @@ function Stats() {
 function Categories() {
   const [active, setActive] = useState(0);
   const selected = categories[active];
+  const previewImages = selected.images.slice(0, 3);
 
   return (
     <section className="section" id="categories">
       <div className="container">
         <SectionIntro
-          eyebrow="Patch categories"
-          title="Every patch style your project needs"
+          eyebrow="Product categories"
+          title="Every style your project needs"
           text="Choose the material, edge, texture, and backing that matches your product, uniform, merchandise, or campaign."
         />
-        <div className="category-tabs" role="tablist" aria-label="Patch categories">
+        <div className="category-tabs" role="tablist" aria-label="Product categories">
           {categories.map((item, index) => (
             <button
               className={active === index ? 'is-active' : ''}
@@ -194,22 +198,32 @@ function Categories() {
         <div className="category-panel motion-item">
           <div>
             <span className="eyebrow">Featured style</span>
-            <h3>{selected.title} Patches</h3>
+            <h3>{selected.heading}</h3>
             <p>{selected.desc}</p>
             <ul className="check-list">
               {selected.points.map((point) => (
                 <li key={point}><Check size={17} /> {point}</li>
               ))}
             </ul>
-            <a className="btn btn-dark" href="#quote">Start Custom Order</a>
+            <a
+              className="btn btn-dark"
+              href={selected.title === 'Hoodies' ? '#gallery' : '#quote'}
+              onClick={() => {
+                if (selected.title === 'Hoodies') {
+                  window.dispatchEvent(new CustomEvent('gallery-filter', { detail: 'Hoodies' }));
+                }
+              }}
+            >
+              {selected.title === 'Hoodies' ? 'View All Hoodies' : 'Start Custom Order'}
+            </a>
           </div>
-          <div className="category-image-grid" key={selected.title}>
-            {selected.images.map((image, index) => (
+          <div className={`category-image-grid ${selected.title === 'Hoodies' ? 'is-hoodies' : ''}`} key={selected.title}>
+            {previewImages.map((image, index) => (
               <img
                 className={index === 0 ? 'tab-image-main' : 'tab-image-thumb'}
                 key={image}
                 src={image}
-                alt={`${selected.title} custom patch sample ${index + 1}`}
+                alt={`${selected.heading} sample ${index + 1}`}
               />
             ))}
           </div>
@@ -220,6 +234,19 @@ function Categories() {
 }
 
 function Gallery() {
+  const [filter, setFilter] = useState('All');
+  const items = useMemo(
+    () => (filter === 'All' ? gallery : gallery.filter(([, , type]) => type === filter)),
+    [filter],
+  );
+  const marqueeItems = useMemo(() => [...items, ...items], [items]);
+
+  useEffect(() => {
+    const onFilter = (event) => setFilter(event.detail);
+    window.addEventListener('gallery-filter', onFilter);
+    return () => window.removeEventListener('gallery-filter', onFilter);
+  }, []);
+
   return (
     <section className="section gallery-section" id="gallery">
       <div className="container">
@@ -227,23 +254,34 @@ function Gallery() {
           <SectionIntro
             align="left"
             eyebrow="Product gallery"
-            title="Real production-inspired finishes"
-            text="Explore patch styles for apparel brands, public safety teams, outdoor gear, events, clubs, and wholesale merchandise."
+            title="Patches, hoodies, and custom apparel"
+            text="Browse real production samples across embroidered patches, PVC badges, custom hoodies, and printed tees."
           />
-          <div className="pill-row">
-            <span>All</span>
-            <span>Uniform</span>
-            <span>Retail</span>
-            <span>Tactical</span>
+          <div className="pill-row" role="tablist" aria-label="Gallery filters">
+            {galleryFilters.map((label) => (
+              <button
+                key={label}
+                type="button"
+                className={filter === label ? 'is-active' : ''}
+                onClick={() => setFilter(label)}
+                role="tab"
+                aria-selected={filter === label}
+              >
+                {label === 'Hoodies' ? 'All Hoodies' : label}
+              </button>
+            ))}
           </div>
         </div>
-        <div className="gallery-grid">
-          {gallery.map(([title, image, type]) => (
-            <article className="gallery-card motion-item" key={title}>
-              <img src={image} alt={`${title} custom patch`} />
+      </div>
+
+      <div className="gallery-marquee" aria-label="Scrolling product gallery" key={`marquee-${filter}`}>
+        <div className="gallery-marquee-track">
+          {marqueeItems.map(([title, image, type], index) => (
+            <article className="gallery-marquee-card" key={`${type}-${title}-${index}`}>
+              <img src={image} alt={title} loading="lazy" />
               <div>
                 <span>{type}</span>
-                <h3>{title}</h3>
+                <strong>{title}</strong>
               </div>
             </article>
           ))}
@@ -265,7 +303,7 @@ function WhyChooseUs() {
         <div className="reason-grid">
           {reasons.map(([Icon, title, text]) => (
             <article className="feature-card motion-item" key={title}>
-              <Icon size={26} />
+              <div className="feature-icon"><Icon size={24} /></div>
               <h3>{title}</h3>
               <p>{text}</p>
             </article>
@@ -370,7 +408,10 @@ function Faq() {
 
 function QuoteForm() {
   const [submitted, setSubmitted] = useState(false);
-  const typeOptions = useMemo(() => categories.map((item) => item.title), []);
+  const typeOptions = useMemo(
+    () => categories.filter((item) => item.title !== 'Hoodies').map((item) => item.title),
+    [],
+  );
   const mapsUrl = 'https://www.google.com/maps/search/?api=1&query=Sialkot%2C%20Pakistan';
 
   return (
@@ -513,11 +554,12 @@ export default function App() {
         entries.forEach((entry) => {
           if (entry.isIntersecting) {
             entry.target.classList.add('in-view');
-            observer.unobserve(entry.target);
+          } else {
+            entry.target.classList.remove('in-view');
           }
         });
       },
-      { threshold: 0.16 },
+      { threshold: 0.18, rootMargin: '0px 0px -8% 0px' },
     );
 
     animated.forEach((item) => observer.observe(item));
